@@ -11,13 +11,12 @@ SHUFFLE_ITERATIONS = 3
 
 
 class Fifteen:
-    def __init__(self, size: int):
+    def __init__(self, size: int = 4):
         self.size = size
         self.field = self.__init_field()
 
         self.empty_x = self.size - 1
         self.empty_y = self.size - 1
-        self.shuffle()
 
     def __init_field(self) -> List[List[int]]:
         field = []

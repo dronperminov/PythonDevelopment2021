@@ -11,6 +11,7 @@ class FifteenApplication:
 
         self.size = size
         self.fifteen = Fifteen(size)
+        self.fifteen.shuffle()
 
         self.app.title("Fifteen | Perminov A.I.")
         self.app.geometry("320x300")
