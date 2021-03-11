@@ -7,7 +7,7 @@ RIGHT = 'right'
 UP = 'up'
 DOWN = 'down'
 DIRECTIONS = [LEFT, RIGHT, UP, DOWN]
-SHUFFLE_ITERATIONS = 3
+SHUFFLE_ITERATIONS = 20
 
 
 class Fifteen:
