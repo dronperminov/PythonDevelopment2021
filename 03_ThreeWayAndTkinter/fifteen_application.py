@@ -26,10 +26,18 @@ class FifteenApplication:
     def update_buttons(self):
         for i in range(self.size):
             for j in range(self.size):
-                self.buttons[i][j].config(text=str(self.fifteen.get_value_at(j, i)))
+                value = self.fifteen.get_value_at(j, i)
+                self.buttons[value].grid(row=i, column=j, sticky='wens')
 
-    def move(self, x: int, y: int):
-        self.fifteen.move(x, y)
+    def make_move(self, value: int):
+        for y in range(self.size):
+            for x in range(self.size):
+                if self.fifteen.get_value_at(x, y) == value:
+                    self.fifteen.move(x, y)
+                    return
+
+    def move(self, value: int):
+        self.make_move(value)
         self.update_buttons()
 
         if self.fifteen.is_win():
@@ -64,23 +72,25 @@ class FifteenApplication:
 
         return game_frame
 
-    def init_buttons(self) -> List[List[tk.Button]]:
+    def init_buttons(self) -> List[tk.Button]:
         buttons = []
         btn_font = font.Font(family='Helvetica', size=15)
 
         for i in range(self.size):
-            buttons_row = []
-
             for j in range(self.size):
-                btn_text = self.fifteen.get_value_at(j, i)
-                btn_command = lambda i=i, j=j: self.move(j, i)
-                btn = tk.Button(self.game_frame, text=btn_text, font=btn_font, command=btn_command)
-                btn.grid(row=i, column=j, sticky='wens')
-                buttons_row.append(btn)
+                btn_value = i * self.size + j
+                btn_command = lambda btn_value=btn_value: self.move(btn_value)
 
-            buttons.append(buttons_row)
+                if btn_value == 0:
+                    btn = tk.Frame(self.game_frame)
+                else:
+                    btn = tk.Button(self.game_frame, text=str(btn_value), font=btn_font, command=btn_command)
+
+                btn.grid(row=i, column=j, sticky='wens')
+                buttons.append(btn)
 
         return buttons
 
     def run(self):
+        self.update_buttons()
         self.app.mainloop()

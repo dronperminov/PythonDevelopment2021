@@ -60,11 +60,8 @@ class Fifteen:
         self.empty_x = x
         self.empty_y = y
 
-    def get_value_at(self, x, y) -> str:
-        if x == self.empty_x and y == self.empty_y:
-            return ""
-
-        return str(self.field[y][x])
+    def get_value_at(self, x, y) -> int:
+        return self.field[y][x]
 
     def print(self):
         for row in self.field:
