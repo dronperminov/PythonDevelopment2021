@@ -12,7 +12,11 @@
 * Не использовать неразрешимые расстановки
 * Сделать все числовые кнопки одинакового размера
 
-## Примеры работы приложения
+## Пример работы приложения
+
+<img src='https://github.com/dronperminov/PythonDevelopment2021/blob/main/03_ThreeWayAndTkinter/examples/fifteen.gif' />
+  
+## Скриншоты работы приложения
 
 <table>
   <tr>
