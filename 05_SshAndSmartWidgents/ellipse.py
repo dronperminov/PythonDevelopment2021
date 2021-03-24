@@ -32,7 +32,7 @@ class Ellipse:
         self.y0 += dy / 2
 
     def to_str(self) -> str:
-        return f"ellipse ({self.x0} {self.y0}) {self.r1} {self.r2}; {self.width} {self.color} {self.background}"
+        return f"ellipse ({int(self.x0)} {int(self.y0)}) {self.r1} {self.r2}; {self.width} {self.color} {self.background}"
 
     def to_canvas(self, canvas: Canvas):
         x1 = self.x0 - self.r1
