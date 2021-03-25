@@ -1,7 +1,9 @@
 import tkinter as tk
 import tkinter.colorchooser
+import tkinter.ttk as ttk
 from shape import Shape
 from shapes.ellipse import Ellipse
+from shapes.rectangle import Rectangle
 from typing import List, Optional
 
 
@@ -52,6 +54,10 @@ class DrawingApplication:
                                         command=lambda: self.select_color(self.background_btn))
         self.background_btn.grid(row=0, column=2)
 
+        self.type_box = ttk.Combobox(control_frame, values=["Ellipse", "Rectangle"], state="readonly", width=10)
+        self.type_box.grid(row=0, column=3)
+        self.type_box.current(0)
+
         self.canvas = tk.Canvas(graph_frame, bg='#fff')
         self.canvas.grid(row=1, column=0, sticky='news')
         self.app.columnconfigure(1, weight=1)
@@ -83,13 +89,23 @@ class DrawingApplication:
             self.text.insert(tk.END, shape.to_str() + "\n")
 
     def add_shape(self, x: int, y: int) -> Shape:
-        r1 = 20
-        r2 = 20
         width = self.width_box.get()
         color = self.color_btn["bg"]
         background = self.background_btn["bg"]
 
-        return Ellipse(x - r1, y - r2, r1, r2, width, color, background)
+        shape_type = self.type_box.get()
+
+        if shape_type == "Ellipse":
+            r1 = 20
+            r2 = 20
+
+            return Ellipse(x - r1, y - r2, r1, r2, width, color, background)
+
+        if shape_type == "Rectangle":
+            w = 20
+            h = 20
+
+            return Rectangle(x - w, y - h, w, h, width, color, background)
 
     def get_shape_at(self, x: int, y: int) -> int:
         for i, shape in enumerate(self.shapes):
@@ -166,6 +182,9 @@ class DrawingApplication:
     def line_to_shape(self, line: str) -> Optional[Shape]:
         if Ellipse.is_valid_description(line):
             return Ellipse.parse_from_line(line)
+
+        if Rectangle.is_valid_description(line):
+            return Rectangle.parse_from_line(line)
 
         return None
 
