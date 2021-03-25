@@ -1,16 +1,15 @@
+import re
 from tkinter import Canvas
+from shape import Shape, STYLE_REGEXP
 
 
-class Ellipse:
+class Ellipse(Shape):
     def __init__(self, x0: int, y0: int, r1: int, r2: int, width: int, color: str, background: str):
+        super(Ellipse, self).__init__(width, color, background)
         self.x0 = x0
         self.y0 = y0
         self.r1 = r1
         self.r2 = r2
-
-        self.width = width
-        self.color = color
-        self.background = background
 
     def is_mouse_hover(self, x: int, y: int) -> bool:
         dx = x - self.x0
@@ -42,3 +41,20 @@ class Ellipse:
         y2 = self.y0 + self.r2
 
         canvas.create_oval(x1, y1, x2, y2, fill=self.background, outline=self.color, width=self.width)
+
+    @staticmethod
+    def parse_from_line(line: str) -> "Ellipse":
+        args = line.split()
+        x0 = int(args[1][1:])
+        y0 = int(args[2][:-1])
+        r1 = int(args[3])
+        r2 = int(args[4][:-1])
+        width = int(args[5])
+        color = args[6]
+        background = args[7]
+
+        return Ellipse(x0, y0, r1, r2, width, color, background)
+
+    @staticmethod
+    def is_valid_description(line: str) -> bool:
+        return bool(re.fullmatch(r"ellipse \(\d+ \d+\) \d+ \d+; " + STYLE_REGEXP, line))
