@@ -10,7 +10,7 @@ from typing import List, Optional
 class DrawingApplication:
     def __init__(self):
         self.app = tk.Tk()
-        self.app.title("Ellipse drawer | Perminov A.I.")
+        self.app.title("Shape drawer | Perminov A.I.")
         self.app.geometry("900x500")
 
         self.init_components()
@@ -96,8 +96,8 @@ class DrawingApplication:
         shape_type = self.type_box.get()
 
         if shape_type == "Ellipse":
-            r1 = 20
-            r2 = 20
+            r1 = 10
+            r2 = 10
 
             return Ellipse(x - r1, y - r2, r1, r2, width, color, background)
 
