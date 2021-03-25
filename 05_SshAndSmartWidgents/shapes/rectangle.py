@@ -5,9 +5,7 @@ from shape import Shape, STYLE_REGEXP
 
 class Rectangle(Shape):
     def __init__(self, x0: int, y0: int, w: int, h: int, width: int, color: str, background: str):
-        super(Rectangle, self).__init__(width, color, background)
-        self.x0 = x0
-        self.y0 = y0
+        super(Rectangle, self).__init__(x0, y0, width, color, background)
         self.w = w
         self.h = h
 
@@ -16,10 +14,6 @@ class Rectangle(Shape):
         dy = abs(y - self.y0)
 
         return dx <= self.w / 2 and dy <= self.h / 2
-
-    def move(self, dx: int, dy: int):
-        self.x0 += dx
-        self.y0 += dy
 
     def resize(self, dx: int, dy: int):
         if self.w + dx <= 5 or self.h + dy <= 5:

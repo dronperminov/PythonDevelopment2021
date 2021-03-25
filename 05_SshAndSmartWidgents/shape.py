@@ -6,7 +6,10 @@ STYLE_REGEXP = r"\d+ #[0-9a-f]{3}([0-9a-f]{3})? #[0-9a-f]{3}([0-9a-f]{3})?"
 
 
 class Shape:
-    def __init__(self, width: int, color: str, background: str):
+    def __init__(self, x0: int, y0: int, width: int, color: str, background: str):
+        self.x0 = x0
+        self.y0 = y0
+
         self.width = width
         self.color = color
         self.background = background
@@ -15,9 +18,9 @@ class Shape:
     def is_mouse_hover(self, x: int, y: int) -> bool:
         pass
 
-    @abstractmethod
     def move(self, dx: int, dy: int):
-        pass
+        self.x0 += dx
+        self.y0 += dy
 
     @abstractmethod
     def resize(self, dx: int, dy: int):

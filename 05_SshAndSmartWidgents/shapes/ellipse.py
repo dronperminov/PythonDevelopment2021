@@ -5,9 +5,8 @@ from shape import Shape, STYLE_REGEXP
 
 class Ellipse(Shape):
     def __init__(self, x0: int, y0: int, r1: int, r2: int, width: int, color: str, background: str):
-        super(Ellipse, self).__init__(width, color, background)
-        self.x0 = x0
-        self.y0 = y0
+        super(Ellipse, self).__init__(x0, y0, width, color, background)
+
         self.r1 = r1
         self.r2 = r2
 
@@ -16,10 +15,6 @@ class Ellipse(Shape):
         dy = y - self.y0
 
         return (dx / self.r1)**2 + (dy / self.r2)**2 < 1
-
-    def move(self, dx: int, dy: int):
-        self.x0 += dx
-        self.y0 += dy
 
     def resize(self, dx: int, dy: int):
         if self.r1 + dx <= 5 or self.r2 + dy <= 5:
@@ -34,11 +29,11 @@ class Ellipse(Shape):
         return f"ellipse ({int(self.x0)} {int(self.y0)}) {self.r1} {self.r2}; {self.width} {self.color} {self.background}"
 
     def to_canvas(self, canvas: Canvas):
-        x1 = self.x0 - self.r1 // 2
-        y1 = self.y0 - self.r2 // 2
+        x1 = self.x0 - self.r1
+        y1 = self.y0 - self.r2
 
-        x2 = self.x0 + self.r1 // 2
-        y2 = self.y0 + self.r2 // 2
+        x2 = self.x0 + self.r1
+        y2 = self.y0 + self.r2
 
         canvas.create_oval(x1, y1, x2, y2, fill=self.background, outline=self.color, width=self.width)
 
