@@ -1,8 +1,8 @@
 import tkinter as tk
 import tkinter.colorchooser
-from ellipse import Ellipse
-import re
-from typing import List
+from shape import Shape
+from shapes.ellipse import Ellipse
+from typing import List, Optional
 
 
 class DrawingApplication:
@@ -82,7 +82,7 @@ class DrawingApplication:
         for shape in self.shapes:
             self.text.insert(tk.END, shape.to_str() + "\n")
 
-    def add_ellipse(self, x: int, y: int) -> Ellipse:
+    def add_shape(self, x: int, y: int) -> Shape:
         r1 = 20
         r2 = 20
         width = self.width_box.get()
@@ -112,7 +112,7 @@ class DrawingApplication:
 
         if e.num == 1:
             if shape_index == -1:
-                self.active_shape = self.add_ellipse(e.x, e.y)
+                self.active_shape = self.add_shape(e.x, e.y)
                 self.shapes.append(self.active_shape)
                 self.is_resize = True
             else:
@@ -163,23 +163,11 @@ class DrawingApplication:
 
         self.draw()
 
-    def is_valid_line(self, line: str) -> bool:
-        if re.fullmatch(r"ellipse \(\d+ \d+\) \d+ \d+; \d+ #[0-9a-f]{3}([0-9a-f]{3})? #[0-9a-f]{3}([0-9a-f]{3})?", line):
-            return True
+    def line_to_shape(self, line: str) -> Optional[Shape]:
+        if Ellipse.is_valid_description(line):
+            return Ellipse.parse_from_line(line)
 
-        return False
-
-    def line_to_shape(self, line: str) -> Ellipse:
-        args = line.split()
-        x0 = int(args[1][1:])
-        y0 = int(args[2][:-1])
-        r1 = int(args[3])
-        r2 = int(args[4][:-1])
-        width = int(args[5])
-        color = args[6]
-        background = args[7]
-
-        return Ellipse(x0, y0, r1, r2, width, color, background)
+        return None
 
     def parse_lines(self, lines: List[str]):
         is_valid = True
@@ -188,12 +176,14 @@ class DrawingApplication:
             if not line.strip():
                 continue
 
-            if self.is_valid_line(line):
-                self.shapes.append(self.line_to_shape(line))
-                self.text.tag_add("valid", "%s.0" % (i + 1), "%s.0" % (i + 2))
-            else:
+            shape = self.line_to_shape(line)
+
+            if shape is None:
                 is_valid = False
                 self.text.tag_add("error", "%s.0" % (i + 1), "%s.0" % (i + 2))
+            else:
+                self.shapes.append(shape)
+                self.text.tag_add("valid", "%s.0" % (i + 1), "%s.0" % (i + 2))
 
         return is_valid
 
