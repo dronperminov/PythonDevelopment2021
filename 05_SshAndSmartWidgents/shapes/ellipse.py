@@ -34,11 +34,11 @@ class Ellipse(Shape):
         return f"ellipse ({int(self.x0)} {int(self.y0)}) {self.r1} {self.r2}; {self.width} {self.color} {self.background}"
 
     def to_canvas(self, canvas: Canvas):
-        x1 = self.x0 - self.r1
-        y1 = self.y0 - self.r2
+        x1 = self.x0 - self.r1 // 2
+        y1 = self.y0 - self.r2 // 2
 
-        x2 = self.x0 + self.r1
-        y2 = self.y0 + self.r2
+        x2 = self.x0 + self.r1 // 2
+        y2 = self.y0 + self.r2 // 2
 
         canvas.create_oval(x1, y1, x2, y2, fill=self.background, outline=self.color, width=self.width)
 

@@ -1,5 +1,4 @@
 from abc import abstractmethod
-import re
 from tkinter import Canvas
 
 
