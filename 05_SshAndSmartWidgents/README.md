@@ -24,7 +24,7 @@
   
  ## Пример работы приложения
 
-<img src='https://github.com/dronperminov/PythonDevelopment2021/blob/main/05_SshAndSmartWidgents/examples/ellipse_drawer.gif' />
+<img src='https://github.com/dronperminov/PythonDevelopment2021/blob/main/05_SshAndSmartWidgents/examples/shape_drawer.gif' />
 
 ## Скриншоты работы приложения
 
